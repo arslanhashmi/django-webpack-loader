@@ -91,7 +91,7 @@ class WebpackLoader(object):
                     asset = assets['assets'][chunk]
                 except KeyError:
                     if chunk.endswith('.map'):  # Ignoring map files if missing
-                        pass
+                        continue
                     raise
 
                 if asset is None:
