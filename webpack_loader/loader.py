@@ -87,7 +87,13 @@ class WebpackLoader(object):
                 raise WebpackBundleLookupError('Cannot resolve bundle {0}.'.format(bundle_name))
 
             for chunk in chunks:
-                asset = assets['assets'][chunk]
+                try:
+                    asset = assets['assets'][chunk]
+                except KeyError:
+                    if chunk.endswith('.map'):  # Ignoring map files if missing
+                        pass
+                    raise
+
                 if asset is None:
                     raise WebpackBundleLookupError('Cannot resolve asset {0}.'.format(chunk))
 
